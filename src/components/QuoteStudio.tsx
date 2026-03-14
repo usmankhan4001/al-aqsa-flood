@@ -65,7 +65,7 @@ export const QuoteStudio: React.FC<{ book: Book, state: AppState, updateState: a
   }
 
   return (
-    <div className="flex-1 flex flex-col h-[calc(100vh-64px)] overflow-hidden">
+    <div id="studio-component" className="flex-1 flex flex-col h-[calc(100vh-64px)] overflow-hidden">
       {/* 1. Top Section: Designer Preview */}
       <div className="p-4 sm:p-6 flex flex-col items-center shrink-0 bg-[var(--bg-color)] border-b border-[var(--border-color)]/20 shadow-sm">
         <div className="w-full max-w-lg mb-4 flex justify-between items-center px-1">
@@ -74,7 +74,7 @@ export const QuoteStudio: React.FC<{ book: Book, state: AppState, updateState: a
             کوٹ اسٹوڈیو
           </h2>
           <div className="flex gap-2">
-             <button onClick={handleExport} className="p-2 text-[var(--accent-color)] hover:bg-[var(--accent-color)]/10 rounded-full transition-colors">
+             <button id="studio-export-button" onClick={handleExport} className="p-2 text-[var(--accent-color)] hover:bg-[var(--accent-color)]/10 rounded-full transition-colors">
                 <Download size={20} />
              </button>
              <button className="p-2 text-[var(--accent-color)] hover:bg-[var(--accent-color)]/10 rounded-full transition-colors">
@@ -85,6 +85,7 @@ export const QuoteStudio: React.FC<{ book: Book, state: AppState, updateState: a
 
         <motion.div 
           layoutId="preview"
+          id="studio-preview-area"
           ref={containerRef}
           className="aspect-square w-full max-w-sm flex items-center justify-center p-8 relative overflow-hidden shadow-xl bg-cover bg-center border border-[var(--border-color)]/30"
           style={{ backgroundImage: 'url(/quotebg.png)' }}
@@ -102,7 +103,7 @@ export const QuoteStudio: React.FC<{ book: Book, state: AppState, updateState: a
       </div>
 
       {/* 2. Bottom Section: Highlights Selection List */}
-      <div className="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar bg-[var(--bg-color)]/50">
+      <div id="studio-highlights-list" className="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar bg-[var(--bg-color)]/50">
         <div className="max-w-xl mx-auto space-y-3">
           <p className="text-xs font-nastaliq opacity-40 mb-2 px-1">اپنے اقتباسات میں سے انتخاب کریں:</p>
           {highlights.map((highlight, idx) => {

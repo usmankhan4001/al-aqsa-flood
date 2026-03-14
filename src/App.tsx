@@ -188,10 +188,15 @@ export default function App() {
       </AnimatePresence>
 
       <AnimatePresence>
-        {!state.hasSeenWalkthrough && (
+        {!state.seenWalkthroughs[state.activeView as keyof typeof state.seenWalkthroughs] && (
           <Walkthrough 
-            activeView={state.activeView}
-            onComplete={() => updateState({ hasSeenWalkthrough: true })}
+            type={state.activeView as any}
+            onComplete={() => updateState({ 
+              seenWalkthroughs: { 
+                ...state.seenWalkthroughs, 
+                [state.activeView]: true 
+              } 
+            })}
           />
         )}
       </AnimatePresence>

@@ -28,7 +28,7 @@ export function NotesGallery({ book, state, updateState, onJump }: { book: Book,
             <p className="font-nastaliq text-2xl">کوئی نوٹ موجود نہیں ہے۔</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div id="notes-list" className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {notes.map((h, idx) => {
               const chapter = book.chapters.find(c => c.id === h.chapterId);
               return (

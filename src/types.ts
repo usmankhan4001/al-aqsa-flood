@@ -50,5 +50,11 @@ export interface AppState {
   audioEnabled: boolean;
   activeView: 'library' | 'reader' | 'highlights' | 'notes' | 'studio';
   returnToView?: 'library' | 'reader';
-  hasSeenWalkthrough: boolean;
+  seenWalkthroughs: {
+    library: boolean;
+    reader: boolean;
+    highlights: boolean;
+    notes: boolean;
+    studio: boolean;
+  };
 }

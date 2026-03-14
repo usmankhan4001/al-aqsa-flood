@@ -28,12 +28,12 @@ export function HighlightsGallery({ book, state, updateState, onClose, onJump }:
             <h2 className="text-2xl font-nastaliq font-bold">ہائی لائٹس اور نوٹس</h2>
             <p className="text-xs opacity-40 font-nastaliq mt-1">آپ کے تمام محفوظ کردہ اقتباسات</p>
           </div>
-          <button onClick={onClose} className="p-3 rounded-full hover:bg-[var(--text-color)]/10 transition-colors active:scale-95">
+          <button id="highlights-close-button" onClick={onClose} className="p-3 rounded-full hover:bg-[var(--text-color)]/10 transition-colors active:scale-95">
             <X size={24} />
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto custom-scrollbar pb-10">
+        <div id="highlights-list" className="flex-1 overflow-y-auto custom-scrollbar pb-10">
           {state.highlights.length === 0 ? (
             <div className="flex flex-col items-center justify-center opacity-40 py-20 text-center">
               <div className="w-16 h-16 mb-4 rounded-full bg-[var(--text-color)]/5 flex items-center justify-center">
