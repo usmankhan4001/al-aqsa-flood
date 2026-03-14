@@ -1,20 +1,58 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# طوفان کے پرچم تلے (Under the Flag of the Storm)
 
-# Run and deploy your AI Studio app
+![App Icon](/public/icon.png)
 
-This contains everything you need to run your app locally.
+**طوفان کے پرچم تلے** (Under the Flag of the Storm) is a premium digital book reader and PWA (Progressive Web App) dedicated to the life and legacy of **Shaheed Muhammad Zaki Hamad (Abu Zaki)**. 
 
-View your app in AI Studio: https://ai.studio/apps/d02bf7b9-098d-4099-9440-1f47dec6f1c8
+The application provides an immersive reading experience for the documentary book written by the martyr himself, detailing the events of the Al-Aqsa Flood battle from the perspective of a scholar and a fighter.
 
-## Run Locally
+## ✨ Features
 
-**Prerequisites:**  Node.js
+- **📖 Premium Reading Experience**: Optimized for Urdu typography using Jameel Noori Nastaliq fonts for a traditional and elegant look.
+- **🎨 Dynamic Themes**: Choose from Light, Dark, Sepia, Midnight, Oasis, and Paper themes to suit your reading environment.
+- **✨ Highlighting & Notes**: Select any text to highlight it with various colors and add personal notes to important passages.
+- **🖼️ Quote Sharing**: Generate and share beautiful images of your favorite quotes with a custom-designed background.
+- **📱 PWA Ready**: Install the app on your mobile home screen or desktop for a native-like experience with offline support.
+- **📚 Interactive TOC**: Quickly navigate through chapters using the integrated Table of Contents.
+- **🌓 Adaptive Brightness**: Built-in software brightness control for comfortable reading in all lighting conditions.
 
+## 🛠️ Technology Stack
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+- **React + Vite**: For a fast and responsive user interface.
+- **Tailwind CSS**: For modern and adaptive styling.
+- **Framer Motion**: For smooth transitions and premium micro-animations.
+- **PWA (Vite PWA Plugin)**: For offline capabilities and installability.
+- **Mark.js**: For precise and persistent text highlighting.
+
+## 🚀 Getting Started
+
+To run this project locally:
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/usmankhan4001/al-aqsa-flood.git
+   cd al-aqsa-flood
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Run in development mode**:
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for production**:
+   ```bash
+   npm run build
+   ```
+
+## 🖋️ About the Author
+
+**Shaheed Muhammad Zaki Hamad (1994–2025)** was a scholar, Hafiz of the Quran, and a leader in Northern Gaza. He was the head of the Online Academy of the 'Darul Quran Al-Kareem Wa Sunnah' and a tireless mujahid who served his community and faith. He was martyred on July 12, 2025, leaving behind this profound written legacy for the Ummah.
+
+## 📄 License
+
+This project is licensed under the Apache-2.0 License.
