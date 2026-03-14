@@ -1,0 +1,21 @@
+{
+  "name": "طوفان کے پرچم تلے - محمد زکی حمد",
+  "short_name": "طوفان کے پرچم",
+  "description": "محمد زکی حمد کی کتاب کا ڈیجیٹل ریڈر",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Jameel Noori Nastaleeq';
+  src: url('https://cdn.jsdelivr.net/gh/nafees-fonts/jameel-noori-nastaleeq/JameelNooriNastaleeq.woff2') format('woff2'),
+       url('https://cdn.jsdelivr.net/gh/nafees-fonts/jameel-noori-nastaleeq/JameelNooriNastaleeq.woff') format('woff'),
+       url('https://cdn.jsdelivr.net/gh/nafees-fonts/jameel-noori-nastaleeq/JameelNooriNastaleeq.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Lora", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-nastaliq: "Jameel Noori Nastaleeq", "Noto Nastaliq Urdu", serif;
+  --font-arabic: "Amiri", serif;
+  
+  --spacing-p: var(--p-spacing, 1.8em);
+}
+
+@layer base {
+  :root {
+    --bg-color: #ffffff;
+    --text-color: #1a1a1a;
+    --accent-color: #3b82f6;
+    --border-color: #e5e7eb;
+  }
+
+  [data-theme="dark"] {
+    --bg-color: #0a0a0a;
+    --text-color: #ededed;
+    --accent-color: #60a5fa;
+    --border-color: #262626;
+  }
+
+  [data-theme="sepia"] {
+    --bg-color: #f8f1e3;
+    --text-color: #4a3b2c;
+    --accent-color: #d97706;
+    --border-color: #e8dfcc;
+  }
+
+  [data-theme="midnight"] {
+    --bg-color: #0b1120;
+    --text-color: #e2e8f0;
+    --accent-color: #38bdf8;
+    --border-color: #1e293b;
+  }
+
+  [data-theme="oasis"] {
+    --bg-color: #f1f5f0;
+    --text-color: #2c3e2d;
+    --accent-color: #4ade80;
+    --border-color: #dce3da;
+  }
+
+  [data-theme="paper"] {
+    --bg-color: #fcfaf8;
+    --text-color: #2b2b2b;
+    --accent-color: #94a3b8;
+    --border-color: #e2e8f0;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-nastaliq);
+    transition: background-color 0.5s ease, color 0.5s ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern", "liga", "clig", "calt";
+    overflow-x: hidden;
+  }
+}
+
+.mesh-container {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.15;
+}
+
+.mesh-gradient {
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  top: -25%;
+  left: -25%;
+  background-image: 
+    radial-gradient(at 0% 0%, var(--accent-color) 0, transparent 50%),
+    radial-gradient(at 100% 0%, #3b82f6 0, transparent 50%),
+    radial-gradient(at 100% 100%, #10b981 0, transparent 50%),
+    radial-gradient(at 0% 100%, #6366f1 0, transparent 50%);
+  filter: blur(80px);
+  animation: mesh-rotate 20s linear infinite;
+}
+
+@keyframes mesh-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .glass,
+[data-theme="midnight"] .glass {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.font-nastaliq {
+  font-family: var(--font-nastaliq);
+  font-feature-settings: "kern", "liga", "clig", "calt";
+}
+
+.reader-content {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.reader-content p {
+  margin-bottom: var(--p-spacing, 1em);
+  text-align: right;
+  opacity: 0.9;
+  line-height: inherit;
+}
+
+.reader-content strong {
+  font-weight: bold;
+}
+
+/* Custom range slider styling */
+input[type=range] {
+  -webkit-appearance: none;
+  background: transparent;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: var(--text-color);
+  cursor: pointer;
+  margin-top: -6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: var(--border-color);
+  border-radius: 4px;
+}
