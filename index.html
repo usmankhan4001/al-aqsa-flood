@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#3b82f6" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="طوفان کے پرچم">
+    <link rel="apple-touch-icon" href="/icon.png">
     <title>طوفان کے پرچم تلے - محمد زکی حمد</title>
   </head>
   <body>
@@ -13,8 +17,14 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then(reg => console.log('Service Worker registered', reg))
+          navigator.serviceWorker.register('/sw.js', { scope: '/' })
+            .then(reg => {
+              console.log('Service Worker registered with scope:', reg.scope);
+              // Check if already installed
+              if (window.matchMedia('(display-mode: standalone)').matches) {
+                console.log('App is already installed');
+              }
+            })
             .catch(err => console.error('Service Worker registration failed', err));
         });
       }

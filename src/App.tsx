@@ -23,28 +23,34 @@ export default function App() {
 
   useEffect(() => {
     const handler = (e: any) => {
+      console.log('beforeinstallprompt event fired');
       e.preventDefault();
       setDeferredPrompt(e);
-      // Show prompt only if they haven't seen it recently or on first visit
-      const hasSeenPrompt = localStorage.getItem('hasSeenInstallPrompt');
-      if (!hasSeenPrompt) {
-        setShowInstallPrompt(true);
-      }
+      setShowInstallPrompt(true);
     };
 
     window.addEventListener('beforeinstallprompt', handler);
+    
+    // Check if already installed to prevent showing UI
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+       setShowInstallPrompt(false);
+    }
+
     return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
 
   const handleInstall = async () => {
-    if (!deferredPrompt) return;
+    if (!deferredPrompt) {
+      console.log('No deferredPrompt available');
+      return;
+    }
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
+    console.log(`User response to install prompt: ${outcome}`);
     if (outcome === 'accepted') {
       setDeferredPrompt(null);
+      setShowInstallPrompt(false);
     }
-    setShowInstallPrompt(false);
-    localStorage.setItem('hasSeenInstallPrompt', 'true');
   };
 
   const handleContinueReading = () => {
