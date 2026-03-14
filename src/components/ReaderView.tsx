@@ -394,7 +394,6 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
       <AnimatePresence>
         {showSettings && (
           <SettingsModal 
-            book={book}
             state={state} 
             updateState={updateState} 
             onClose={() => setShowSettings(false)} 
