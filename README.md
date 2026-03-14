@@ -16,6 +16,10 @@ The application provides an immersive reading experience for the documentary boo
 - **📚 Interactive TOC & Navigation**: Optimized Table of Contents and corrected RTL navigation logic (Urdu-first) for a seamless reading journey.
 - **🌓 Adaptive Brightness**: Integrated software brightness control for comfortable reading in any environment.
 
+## 📖 Learn More
+
+Explore the full potential of the app with our [**Visual Tutorial & Feature Walkthrough**](TUTORIAL.md) — includes screenshots and videos of all V6 features in action.
+
 ## 🛠️ Technology Stack
 
 - **React + Vite**: For a fast and responsive user interface.
