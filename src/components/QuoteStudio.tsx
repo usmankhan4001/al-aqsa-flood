@@ -78,15 +78,15 @@ export const QuoteStudio: React.FC<{ book: Book, state: AppState }> = ({ book, s
         {/* The Studio Container */}
         <div 
           ref={containerRef}
-          className="aspect-square w-full rounded-3xl flex items-center justify-center p-12 relative overflow-hidden shadow-2xl bg-cover bg-center"
+          className="aspect-square w-full flex items-center justify-center p-12 relative overflow-hidden shadow-2xl bg-cover bg-center"
           style={{ backgroundImage: 'url(/quotebg.png)' }}
         >
           {/* Focused Content: Only the quote text */}
           <div className="flex flex-col items-center text-center">
              <p 
                 ref={textRef}
-                className="font-nastaliq leading-[1.6] leading-relaxed text-white drop-shadow-lg"
-                style={{ fontSize: `${fontSize}px` }}
+                className="font-nastaliq leading-[1.6] leading-relaxed"
+                style={{ fontSize: `${fontSize}px`, color: '#433422' }}
              >
                 {currentHighlight.text}
              </p>
