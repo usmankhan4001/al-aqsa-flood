@@ -78,25 +78,18 @@ export const QuoteStudio: React.FC<{ book: Book, state: AppState }> = ({ book, s
         {/* The Studio Container */}
         <div 
           ref={containerRef}
-          className="aspect-square w-full rounded-3xl bg-white flex items-center justify-center p-12 relative overflow-hidden shadow-2xl"
-          style={{ color: '#1a1a1a' }}
+          className="aspect-square w-full rounded-3xl flex items-center justify-center p-12 relative overflow-hidden shadow-2xl bg-cover bg-center"
+          style={{ backgroundImage: 'url(/quotebg.png)' }}
         >
-          {/* Minimalist Design: No background, no blur, just pure text */}
+          {/* Focused Content: Only the quote text */}
           <div className="flex flex-col items-center text-center">
-             <span className="text-4xl mb-4 opacity-20">❝</span>
              <p 
                 ref={textRef}
-                className="font-nastaliq leading-[1.6] leading-relaxed"
+                className="font-nastaliq leading-[1.6] leading-relaxed text-white drop-shadow-lg"
                 style={{ fontSize: `${fontSize}px` }}
              >
                 {currentHighlight.text}
              </p>
-             <span className="text-4xl mt-4 opacity-20 transform rotate-180">❝</span>
-             
-             <div className="mt-8 flex flex-col items-center">
-                <div className="h-px w-12 bg-black/10 mb-4" />
-                <p className="text-sm font-bold opacity-40 uppercase tracking-widest">{book.title}</p>
-             </div>
           </div>
         </div>
 

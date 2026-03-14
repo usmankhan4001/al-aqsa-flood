@@ -144,10 +144,12 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <MainNavbar 
-        activeView={state.activeView}
-        onViewChange={(v) => updateState({ activeView: v })}
-      />
+      {state.activeView !== 'reader' && (
+        <MainNavbar 
+          activeView={state.activeView}
+          onViewChange={(v) => updateState({ activeView: v })}
+        />
+      )}
 
       {/* PWA Install Prompt */}
       <AnimatePresence>
