@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Book, AppState, Highlight } from '../types';
-import { ArrowLeft, Settings, Share2, ChevronLeft, ChevronRight, X, List, Bookmark, Type, StickyNote, Edit3 } from 'lucide-react';
+import { ArrowLeft, Settings, ChevronLeft, ChevronRight, X, List, Bookmark, Type, StickyNote, Edit3, Share2 } from 'lucide-react';
 import { SettingsModal } from './SettingsModal';
-import { ShareModal } from './ShareModal';
 import { TOCModal } from './TOCModal';
 import { HighlightedContent } from './HighlightedContent';
 import { motion, AnimatePresence } from 'motion/react';
@@ -11,7 +10,6 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
   const [showNav, setShowNav] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [showTOC, setShowTOC] = useState(false);
-  const [shareText, setShareText] = useState<string | null>(null);
   const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
   const [noteText, setNoteText] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -311,10 +309,27 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
               onMouseDown={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                setShareText(selection.text);
-                window.getSelection()?.removeAllRanges();
-                setSelection(null);
+                if (selection && (selection as any).start !== undefined) {
+                  const selWithOffsets = selection as any;
+                  const tempId = 'temp-' + Date.now();
+                  const newHighlight: Highlight = {
+                    id: tempId,
+                    chapterId: chapter.id,
+                    text: selWithOffsets.text,
+                    color: '#e5e7eb', // Default neutral color
+                    timestamp: Date.now(),
+                    startOffset: selWithOffsets.start,
+                    endOffset: selWithOffsets.end
+                  };
+                  updateState({ 
+                    highlights: [...state.highlights, newHighlight],
+                    activeView: 'studio'
+                  });
+                  window.getSelection()?.removeAllRanges();
+                  setSelection(null);
+                }
               }}
+              title="Open in Quote Studio"
             >
               <Share2 size={16} />
             </button>
@@ -398,12 +413,6 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
             updateState={updateState} 
             onClose={() => setShowSettings(false)} 
           />
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {shareText && (
-          <ShareModal text={shareText} theme={state.theme} onClose={() => setShareText(null)} />
         )}
       </AnimatePresence>
     </motion.div>
