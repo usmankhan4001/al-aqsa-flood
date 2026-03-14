@@ -61,6 +61,10 @@ This project is optimized for deployment using [Dokploy](https://dokploy.com/).
 4. Dokploy will automatically detect the `Dockerfile` in the root and build the production image.
 5. **Set up your Domain** and you're live!
 
+### Advanced Deployment
+
+For an advanced setup using **Cloudflare Tunnel** and **Wildcard Domains**, please refer to our [Deployment Guide](deployment_guide.md).
+
 ## 🖋️ About the Author
 
 **Shaheed Muhammad Zaki Hamad (1994–2025)** was a scholar, Hafiz of the Quran, and a leader in Northern Gaza. He was the head of the Online Academy of the 'Darul Quran Al-Kareem Wa Sunnah' and a tireless mujahid who served his community and faith. He was martyred on July 12, 2025, leaving behind this profound written legacy for the Ummah.
