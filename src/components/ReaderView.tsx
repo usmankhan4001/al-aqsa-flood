@@ -111,24 +111,37 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
 
   useEffect(() => {
     let timeout: number;
-    const handleSelection = () => {
+    const handleMouseUp = (e: MouseEvent) => {
       clearTimeout(timeout);
       timeout = window.setTimeout(() => {
         const sel = window.getSelection();
         if (sel && sel.toString().trim().length > 0 && sel.rangeCount > 0) {
           const range = sel.getRangeAt(0);
-          const rect = range.getBoundingClientRect();
-          setSelection({ text: sel.toString(), rect });
-        } else {
-          setSelection(null);
+          
+          // Ensure selection is within content
+          if (contentRef.current?.contains(range.commonAncestorContainer)) {
+            const rect = range.getBoundingClientRect();
+            setSelection({ text: sel.toString(), rect });
+          }
         }
-      }, 200);
+      }, 50);
     };
 
-    document.addEventListener('selectionchange', handleSelection);
+    const handleMouseDown = (e: MouseEvent) => {
+      // If clicking outside toolbar and content, clear selection
+      const isToolbarAction = (e.target as HTMLElement).closest('.selection-toolbar');
+      if (!isToolbarAction) {
+        setSelection(null);
+      }
+    };
+
+    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('mousedown', handleMouseDown);
+    
     return () => {
       clearTimeout(timeout);
-      document.removeEventListener('selectionchange', handleSelection);
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('mousedown', handleMouseDown);
     };
   }, []);
 
@@ -259,29 +272,48 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
         {selection && (
           <motion.div 
             initial={{ opacity: 0, scale: 0.9, y: 10 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9 }}
-            className="fixed z-50 bg-slate-900 text-white rounded-xl shadow-2xl p-2 flex items-center gap-2 transform -translate-x-1/2 -translate-y-full border border-white/10"
+            className="fixed z-50 bg-slate-900 text-white rounded-xl shadow-2xl p-2 flex items-center gap-2 transform -translate-x-1/2 -translate-y-full border border-white/10 selection-toolbar"
             style={{ 
               top: Math.max(10, selection.rect.top - 15), 
               left: Math.min(window.innerWidth - 100, Math.max(100, selection.rect.left + selection.rect.width / 2))
             }}
+            onMouseDown={(e) => e.stopPropagation()}
+            onMouseUp={(e) => e.stopPropagation()}
           >
             {['#fef08a', '#bbf7d0', '#bfdbfe', '#fbcfe8', '#e5e7eb'].map(color => (
               <button 
                 key={color}
-                onClick={() => handleHighlight(color)}
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleHighlight(color);
+                }}
                 className="w-7 h-7 rounded-full border border-white/10 hover:scale-110 transition-transform shadow-inner"
                 style={{ backgroundColor: color }}
               />
             ))}
             <div className="w-px h-6 bg-white/20 mx-1" />
-            <button className="p-2 hover:bg-white/10 rounded-lg transition-colors text-amber-200" onClick={handleAddNote} title="Add Note">
+            <button 
+              className="p-2 hover:bg-white/10 rounded-lg transition-colors text-amber-200" 
+              onMouseDown={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleAddNote();
+              }}
+              title="Add Note"
+            >
               <StickyNote size={18} />
             </button>
-            <button className="p-2 hover:bg-white/10 rounded-lg transition-colors" onClick={() => {
-              setShareText(selection.text);
-              window.getSelection()?.removeAllRanges();
-              setSelection(null);
-            }}>
+            <button 
+              className="p-2 hover:bg-white/10 rounded-lg transition-colors" 
+              onMouseDown={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShareText(selection.text);
+                window.getSelection()?.removeAllRanges();
+                setSelection(null);
+              }}
+            >
               <Share2 size={16} />
             </button>
           </motion.div>

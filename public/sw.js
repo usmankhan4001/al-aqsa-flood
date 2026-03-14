@@ -3,8 +3,9 @@ const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   '/manifest.json',
-  'https://cdn.jsdelivr.net/gh/nafees-fonts/jameel-noori-nastaleeq/JameelNooriNastaleeq.woff2',
-  'https://cdn-icons-png.flaticon.com/512/3389/3389081.png'
+  '/icon.png',
+  '/quotebg.png',
+  '/fonts/JameelNooriNastaleeq.ttf'
 ];
 
 self.addEventListener('install', (event) => {
