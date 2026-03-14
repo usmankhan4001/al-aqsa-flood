@@ -231,14 +231,26 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
         
         <div className="w-px h-8 bg-[var(--border-color)] mx-1" />
 
-        <button 
-          onClick={handlePrevChapter}
-          disabled={currentChapterIndex === 0}
-          className="p-3 rounded-xl hover:bg-[var(--text-color)]/5 disabled:opacity-30 transition-colors"
-          title="Previous Chapter"
-        >
-          <ChevronRight size={20} className="rtl:-scale-x-100" />
-        </button>
+        <div className="flex items-center gap-1 group">
+          <button 
+            onClick={handleNextChapter}
+            disabled={currentChapterIndex === book.chapters.length - 1}
+            className="p-3 rounded-xl hover:bg-[var(--text-color)]/5 disabled:opacity-30 transition-colors"
+            title="Next Chapter"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <button 
+            onClick={handlePrevChapter}
+            disabled={currentChapterIndex === 0}
+            className="p-3 rounded-xl hover:bg-[var(--text-color)]/5 disabled:opacity-30 transition-colors"
+            title="Previous Chapter"
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
+
+        <div className="w-px h-8 bg-[var(--border-color)] mx-1" />
 
         <button onClick={() => setShowTOC(true)} className="p-3 rounded-xl hover:bg-[var(--text-color)]/5 transition-colors" title="Table of Contents">
           <List size={20} />
@@ -253,15 +265,6 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
           {state.highlights.length > 0 && (
             <span className="absolute top-2 right-2 w-2 h-2 bg-[var(--accent-color)] rounded-full" />
           )}
-        </button>
-
-        <button 
-          onClick={handleNextChapter}
-          disabled={currentChapterIndex === book.chapters.length - 1}
-          className="p-3 rounded-xl hover:bg-[var(--text-color)]/5 disabled:opacity-30 transition-colors"
-          title="Next Chapter"
-        >
-          <ChevronLeft size={20} className="rtl:-scale-x-100" />
         </button>
       </footer>
 
