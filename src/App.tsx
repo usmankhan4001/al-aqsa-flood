@@ -156,19 +156,19 @@ export default function App() {
         {showInstallPrompt && (
           <motion.div 
             initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-6 left-6 right-6 z-[110] glass p-6 rounded-3xl shadow-2xl flex flex-col sm:flex-row items-center gap-4 border border-white/20 max-w-2xl mx-auto"
+            className="fixed bottom-6 left-6 right-6 z-[110] bg-[var(--bg-color)] border border-[var(--border-color)] p-6 rounded-[2rem] shadow-[0_-10px_40px_rgba(0,0,0,0.1)] flex flex-col sm:flex-row items-center gap-4 max-w-2xl mx-auto"
           >
-            <div className="bg-amber-100 p-3 rounded-2xl flex items-center justify-center">
+            <div className="bg-[var(--accent-color)]/10 p-4 rounded-2xl flex items-center justify-center">
               <span className="text-3xl">📱</span>
             </div>
             <div className="flex-1 text-center sm:text-right">
-              <h4 className="text-lg font-bold font-nastaliq">ایپ انسٹال کریں</h4>
-              <p className="text-sm opacity-70 font-nastaliq leading-relaxed">بہتر تجربے اور آف لائن پڑھنے کے لیے ایپ کو اپنی ہوم اسکرین پر شامل کریں۔</p>
+              <h4 className="text-xl font-bold font-nastaliq">ایپ انسٹال کریں</h4>
+              <p className="text-sm opacity-50 font-nastaliq mt-1">آف لائن پڑھنے کے لیے ہوم اسکرین پر شامل کریں۔</p>
             </div>
-            <div className="flex gap-2 w-full sm:w-auto">
+            <div className="flex gap-3 w-full sm:w-auto">
               <button 
                 onClick={handleInstall}
-                className="flex-1 sm:flex-none px-6 py-2 rounded-xl bg-slate-900 text-white font-bold font-nastaliq transition-transform active:scale-95"
+                className="flex-1 sm:flex-none px-8 py-3 rounded-xl bg-[var(--text-color)] text-[var(--bg-color)] font-bold font-nastaliq transition-transform active:scale-95"
               >
                 انسٹال کریں
               </button>
@@ -177,7 +177,7 @@ export default function App() {
                   setShowInstallPrompt(false);
                   localStorage.setItem('hasSeenInstallPrompt', 'true');
                 }}
-                className="flex-1 sm:flex-none px-6 py-2 rounded-xl bg-[var(--text-color)]/5 hover:bg-[var(--text-color)]/10 font-bold font-nastaliq transition-all"
+                className="flex-1 sm:flex-none px-8 py-3 rounded-xl bg-[var(--text-color)]/5 hover:bg-[var(--text-color)]/10 font-bold font-nastaliq transition-all"
               >
                 بعد میں
               </button>

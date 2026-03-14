@@ -88,15 +88,17 @@ export const LibraryView: React.FC<{ book: Book, state: AppState, onContinue: ()
 
         {/* Informative Section (lg:col-span-7) */}
         <div className="lg:col-span-7 w-full flex flex-col lg:h-[36rem] mt-4 sm:mt-8 lg:mt-0">
-          <div className="flex-1 overflow-y-auto hide-scrollbar bg-[var(--text-color)]/5 border border-[var(--border-color)] rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-10" style={{ maxHeight: 'calc(100vh - 150px)' }}>
-            <h3 className="text-2xl font-nastaliq font-bold mb-6 opacity-80">کتاب کا خلاصہ</h3>
-            <p className="text-lg sm:text-xl md:text-2xl leading-relaxed sm:leading-loose opacity-80 text-justify font-nastaliq">
-              {book.summary}
-            </p>
+          <div className="flex-1 overflow-y-auto custom-scrollbar bg-[var(--text-color)]/5 border border-[var(--border-color)] rounded-[2.5rem] p-6 sm:p-10 md:p-14 shadow-sm" style={{ maxHeight: 'calc(100vh - 150px)' }}>
+            <div className="mb-14">
+              <h3 className="text-2xl sm:text-3xl font-nastaliq font-bold mb-8 text-[var(--accent-color)]/80">کتاب کا خلاصہ</h3>
+              <p className="text-xl sm:text-2xl md:text-3xl leading-relaxed sm:leading-loose opacity-80 text-justify font-nastaliq pr-6 border-r-2 border-[var(--accent-color)]/10">
+                {book.summary}
+              </p>
+            </div>
             
-            <div className="mt-12">
-               <h3 className="text-2xl font-nastaliq font-bold mb-6 opacity-80">مصنف کے بارے میں</h3>
-               <p className="text-lg sm:text-xl md:text-2xl leading-relaxed sm:leading-loose opacity-80 text-justify font-nastaliq">
+            <div className="mt-20">
+               <h3 className="text-2xl sm:text-3xl font-nastaliq font-bold mb-8 text-[var(--accent-color)]/80">مصنف کے بارے میں</h3>
+               <p className="text-xl sm:text-2xl md:text-3xl leading-relaxed sm:leading-loose opacity-80 text-justify font-nastaliq pr-6 border-r-2 border-[var(--accent-color)]/10">
                  {book.authorBio}
                </p>
             </div>

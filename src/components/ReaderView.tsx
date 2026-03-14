@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Book, AppState, Highlight } from '../types';
-import { ArrowLeft, Settings, ChevronLeft, ChevronRight, X, List, Bookmark, Type, StickyNote, Edit3, Share2 } from 'lucide-react';
+import { 
+  X, ChevronLeft, ChevronRight, List, Type, 
+  Bookmark, StickyNote, Share2, Home
+} from 'lucide-react';
 import { SettingsModal } from './SettingsModal';
 import { TOCModal } from './TOCModal';
 import { HighlightedContent } from './HighlightedContent';
@@ -223,47 +226,43 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
 
       {/* Unified Navbar */}
       <footer 
-        className={`fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-3 rounded-2xl flex items-center gap-2 sm:gap-4 z-40 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] backdrop-blur-xl bg-[var(--bg-color)]/90 border border-[var(--border-color)] shadow-2xl ${showNav ? 'translate-y-0 opacity-100' : 'translate-y-24 opacity-0'}`}
+        className={`sticky-bottom-nav flex items-center justify-around h-16 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${showNav ? 'translate-y-0' : 'translate-y-full'}`}
       >
-        <button onClick={onBack} className="p-3 rounded-xl hover:bg-[var(--text-color)]/5 transition-colors" title="Home">
-          <X size={20} />
+        <button onClick={onBack} className="p-3 text-[var(--text-color)]/70 hover:text-[var(--text-color)] transition-colors" title="Home">
+          <Home size={22} />
         </button>
         
-        <div className="w-px h-8 bg-[var(--border-color)] mx-1" />
-
-        <div className="flex items-center gap-1 group">
+        <div className="flex items-center gap-1">
           <button 
             onClick={handleNextChapter}
             disabled={currentChapterIndex === book.chapters.length - 1}
-            className="p-3 rounded-xl hover:bg-[var(--text-color)]/5 disabled:opacity-30 transition-colors"
+            className="p-3 text-[var(--text-color)]/70 hover:text-[var(--text-color)] disabled:opacity-20 transition-colors"
             title="Next Chapter"
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={24} />
           </button>
           <button 
             onClick={handlePrevChapter}
             disabled={currentChapterIndex === 0}
-            className="p-3 rounded-xl hover:bg-[var(--text-color)]/5 disabled:opacity-30 transition-colors"
+            className="p-3 text-[var(--text-color)]/70 hover:text-[var(--text-color)] disabled:opacity-20 transition-colors"
             title="Previous Chapter"
           >
-            <ChevronRight size={20} />
+            <ChevronRight size={24} />
           </button>
         </div>
 
-        <div className="w-px h-8 bg-[var(--border-color)] mx-1" />
-
-        <button onClick={() => setShowTOC(true)} className="p-3 rounded-xl hover:bg-[var(--text-color)]/5 transition-colors" title="Table of Contents">
-          <List size={20} />
+        <button onClick={() => setShowTOC(true)} className="p-3 text-[var(--text-color)]/70 hover:text-[var(--text-color)] transition-colors" title="Table of Contents">
+          <List size={22} />
         </button>
 
-        <button onClick={() => setShowSettings(true)} className="p-3 rounded-xl hover:bg-[var(--text-color)]/5 transition-colors" title="Settings">
-          <Type size={20} />
+        <button onClick={() => setShowSettings(true)} className="p-3 text-[var(--text-color)]/70 hover:text-[var(--text-color)] transition-colors" title="Settings">
+          <Type size={22} />
         </button>
 
-        <button onClick={onShowHighlights} className="p-3 rounded-xl hover:bg-[var(--text-color)]/5 transition-colors relative" title="Highlights">
-          <Bookmark size={20} />
+        <button onClick={onShowHighlights} className="p-3 text-[var(--text-color)]/70 hover:text-[var(--text-color)] transition-colors relative" title="Highlights">
+          <Bookmark size={22} />
           {state.highlights.length > 0 && (
-            <span className="absolute top-2 right-2 w-2 h-2 bg-[var(--accent-color)] rounded-full" />
+            <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-[var(--accent-color)] rounded-full shadow-sm" />
           )}
         </button>
       </footer>

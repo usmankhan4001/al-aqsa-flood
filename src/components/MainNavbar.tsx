@@ -17,40 +17,31 @@ export const MainNavbar: React.FC<MainNavbarProps> = ({ activeView, onViewChange
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-[90] pb-safe">
-      <div className="mx-auto max-w-lg mb-4 px-4">
-        <div className="glass px-2 py-2 rounded-full flex items-center justify-between border border-white/10 shadow-2xl">
-          {items.map((item) => {
-            const Icon = item.icon;
-            const isActive = activeView === item.id;
-            
-            return (
-              <button
-                key={item.id}
-                onClick={() => onViewChange(item.id as any)}
-                className={`relative flex-1 flex flex-col items-center py-2 transition-all duration-300 ${isActive ? 'text-[var(--accent-color)]' : 'opacity-50 hover:opacity-80'}`}
-              >
-                {isActive && (
-                  <motion.div
-                    layoutId="navTab"
-                    className="absolute inset-0 bg-[var(--accent-color)]/10 rounded-full"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
-                <Icon size={20} className={isActive ? 'scale-110' : 'scale-100'} />
-                <span className="text-[10px] sm:text-xs mt-1 font-nastaliq font-bold uppercase tracking-tighter">
-                  {item.label}
-                </span>
-                {isActive && (
-                  <motion.div 
-                    layoutId="activeDot"
-                    className="w-1 h-1 bg-[var(--accent-color)] rounded-full mt-0.5"
-                  />
-                )}
-              </button>
-            );
-          })}
-        </div>
+    <nav className="sticky-bottom-nav border-t border-[var(--border-color)]">
+      <div className="flex items-center justify-around h-14 sm:h-16 px-2">
+        {items.map((item) => {
+          const Icon = item.icon;
+          const isActive = activeView === item.id;
+          
+          return (
+            <button
+              key={item.id}
+              onClick={() => onViewChange(item.id as any)}
+              className={`relative flex-1 flex flex-col items-center justify-center py-1 transition-all duration-300 ${isActive ? 'text-[var(--accent-color)]' : 'text-[var(--text-color)]/60 hover:text-[var(--text-color)]/90'}`}
+            >
+              <Icon size={20} strokeWidth={isActive ? 2.5 : 2} />
+              <span className="text-[10px] mt-1 font-nastaliq font-bold tracking-tight">
+                {item.label}
+              </span>
+              {isActive && (
+                <motion.div 
+                  layoutId="activeIndicator"
+                  className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-1 bg-[var(--accent-color)] rounded-b-full"
+                />
+              )}
+            </button>
+          );
+        })}
       </div>
     </nav>
   );
