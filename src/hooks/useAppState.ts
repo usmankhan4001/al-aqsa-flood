@@ -19,6 +19,7 @@ const DEFAULT_STATE: AppState = {
   scrolling: true,
   audioEnabled: false,
   activeView: 'library',
+  hasSeenWalkthrough: false,
 };
 
 export function useAppState() {

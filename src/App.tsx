@@ -11,6 +11,7 @@ import { HighlightsGallery } from './components/HighlightsGallery';
 import { NotesGallery } from './components/NotesGallery';
 import { QuoteStudio } from './components/QuoteStudio';
 import { MainNavbar } from './components/MainNavbar';
+import { Walkthrough } from './components/Walkthrough';
 import bookData from './data/content.json';
 import { Book } from './types';
 import { AnimatePresence, motion } from 'motion/react';
@@ -183,6 +184,15 @@ export default function App() {
               </button>
             </div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {!state.hasSeenWalkthrough && (
+          <Walkthrough 
+            activeView={state.activeView}
+            onComplete={() => updateState({ hasSeenWalkthrough: true })}
+          />
         )}
       </AnimatePresence>
     </div>

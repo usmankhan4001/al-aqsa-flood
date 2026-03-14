@@ -17,7 +17,7 @@ export const MainNavbar: React.FC<MainNavbarProps> = ({ activeView, onViewChange
   ];
 
   return (
-    <nav className="sticky-bottom-nav border-t border-[var(--border-color)]">
+    <nav id="bottom-navigation" className="sticky-bottom-nav border-t border-[var(--border-color)]">
       <div className="flex items-center justify-around h-14 sm:h-16 px-2">
         {items.map((item) => {
           const Icon = item.icon;
@@ -26,6 +26,7 @@ export const MainNavbar: React.FC<MainNavbarProps> = ({ activeView, onViewChange
           return (
             <button
               key={item.id}
+              id={`nav-${item.id}-button`}
               onClick={() => onViewChange(item.id as any)}
               className={`relative flex-1 flex flex-col items-center justify-center py-1 transition-all duration-300 ${isActive ? 'text-[var(--accent-color)]' : 'text-[var(--text-color)]/60 hover:text-[var(--text-color)]/90'}`}
             >

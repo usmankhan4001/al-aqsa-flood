@@ -30,6 +30,7 @@ export const LibraryView: React.FC<{ book: Book, state: AppState, onContinue: ()
         {/* Left/Right Column: Book Cover & Actions (lg:col-span-5) */}
         <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-right w-full">
           <motion.div 
+            id="library-book-cover"
             initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="relative w-48 h-64 sm:w-56 sm:h-80 md:w-64 md:h-[22rem] shrink-0 rounded-l-2xl rounded-r-md shadow-2xl flex items-center justify-start overflow-hidden group cursor-pointer"
             onClick={onContinue}
@@ -76,6 +77,7 @@ export const LibraryView: React.FC<{ book: Book, state: AppState, onContinue: ()
                 </div>
               )}
               <button 
+                id="library-continue-button"
                 onClick={onContinue}
                 className="group relative w-full py-3 sm:py-4 rounded-2xl bg-[var(--text-color)] text-[var(--bg-color)] font-bold tracking-widest text-lg sm:text-xl font-nastaliq hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 shadow-xl"
               >

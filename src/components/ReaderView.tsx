@@ -205,7 +205,8 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
 
       {/* Content */}
       <main 
-        className="max-w-3xl mx-auto pt-32 px-6"
+        id="reader-content-area"
+        className="max-prose mx-auto pt-32 px-6"
         style={{
           fontSize: `${typography.fontSize}px`,
           lineHeight: typography.lineHeight,
@@ -228,7 +229,7 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
       <footer 
         className={`sticky-bottom-nav flex items-center justify-around h-16 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${showNav ? 'translate-y-0' : 'translate-y-full'}`}
       >
-        <button onClick={onBack} className="p-3 text-[var(--text-color)]/70 hover:text-[var(--text-color)] transition-colors" title="Home">
+        <button id="reader-home-button" onClick={onBack} className="p-3 text-[var(--text-color)]/70 hover:text-[var(--text-color)] transition-colors" title="Home">
           <Home size={22} />
         </button>
         
@@ -251,15 +252,15 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
           </button>
         </div>
 
-        <button onClick={() => setShowTOC(true)} className="p-3 text-[var(--text-color)]/70 hover:text-[var(--text-color)] transition-colors" title="Table of Contents">
+        <button id="reader-toc-button" onClick={() => setShowTOC(true)} className="p-3 text-[var(--text-color)]/70 hover:text-[var(--text-color)] transition-colors" title="Table of Contents">
           <List size={22} />
         </button>
 
-        <button onClick={() => setShowSettings(true)} className="p-3 text-[var(--text-color)]/70 hover:text-[var(--text-color)] transition-colors" title="Settings">
+        <button id="reader-settings-button" onClick={() => setShowSettings(true)} className="p-3 text-[var(--text-color)]/70 hover:text-[var(--text-color)] transition-colors" title="Settings">
           <Type size={22} />
         </button>
 
-        <button onClick={onShowHighlights} className="p-3 text-[var(--text-color)]/70 hover:text-[var(--text-color)] transition-colors relative" title="Highlights">
+        <button id="reader-highlights-button" onClick={onShowHighlights} className="p-3 text-[var(--text-color)]/70 hover:text-[var(--text-color)] transition-colors relative" title="Highlights">
           <Bookmark size={22} />
           {state.highlights.length > 0 && (
             <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-[var(--accent-color)] rounded-full shadow-sm" />
