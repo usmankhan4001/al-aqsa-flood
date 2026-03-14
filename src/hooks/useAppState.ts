@@ -11,8 +11,14 @@ const DEFAULT_STATE: AppState = {
     lineHeight: 1.8,
     paragraphSpacing: 24,
     fontFamily: 'nastaliq',
+    alignment: 'right',
+    indent: 0,
+    lineSpacing: 2,
   },
   highlights: [],
+  scrolling: true,
+  audioEnabled: false,
+  activeView: 'library',
 };
 
 export function useAppState() {

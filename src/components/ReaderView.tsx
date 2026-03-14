@@ -210,11 +210,17 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
           lineHeight: typography.lineHeight,
         }}
       >
-        <HighlightedContent 
-          content={chapter.content} 
-          highlights={state.highlights.filter(h => h.chapterId === chapter.id)}
-          contentRef={contentRef}
-        />
+        <div className="max-w-prose mx-auto" style={{ 
+          textAlign: typography.alignment,
+          lineHeight: typography.lineSpacing,
+          paddingRight: `${typography.indent * 1}rem`
+        }}>
+          <HighlightedContent 
+            content={chapter.content} 
+            highlights={state.highlights.filter(h => h.chapterId === chapter.id)}
+            contentRef={contentRef}
+          />
+        </div>
       </main>
 
       {/* Unified Navbar */}
@@ -387,7 +393,12 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
 
       <AnimatePresence>
         {showSettings && (
-          <SettingsModal state={state} updateState={updateState} onClose={() => setShowSettings(false)} />
+          <SettingsModal 
+            book={book}
+            state={state} 
+            updateState={updateState} 
+            onClose={() => setShowSettings(false)} 
+          />
         )}
       </AnimatePresence>
 

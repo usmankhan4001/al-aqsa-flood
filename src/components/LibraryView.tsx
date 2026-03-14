@@ -86,114 +86,20 @@ export const LibraryView: React.FC<{ book: Book, state: AppState, onContinue: ()
           </motion.div>
         </div>
 
-        {/* Tabs Section (lg:col-span-7) */}
+        {/* Informative Section (lg:col-span-7) */}
         <div className="lg:col-span-7 w-full flex flex-col lg:h-[36rem] mt-4 sm:mt-8 lg:mt-0">
-          <div className="flex bg-[var(--text-color)]/5 p-1 sm:p-1.5 rounded-2xl sm:rounded-full mb-6 sm:mb-8 relative w-full max-w-xl mx-auto lg:mx-0 border border-[var(--border-color)]">
-            {[
-              { id: 'summary', label: 'کتاب کا خلاصہ', icon: Info },
-              { id: 'author', label: 'مصنف کے بارے میں', icon: User },
-              { id: 'highlights', label: `ہائی لائٹس (${state.highlights.length})`, icon: Bookmark }
-            ].map((tab) => {
-              const Icon = tab.icon;
-              const isActive = activeTab === tab.id;
-              return (
-                <button 
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id as any)}
-                  className={`flex-1 relative py-2 sm:py-3 px-1 sm:px-2 md:px-4 rounded-xl sm:rounded-full flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 font-nastaliq text-sm sm:text-lg md:text-xl font-bold transition-colors z-10 ${isActive ? 'text-[var(--bg-color)]' : 'text-[var(--text-color)]/70 hover:text-[var(--text-color)]'}`}
-                >
-                  {isActive && (
-                    <motion.div 
-                      layoutId="navSlider" 
-                      className="absolute inset-0 bg-[var(--text-color)] rounded-xl sm:rounded-full -z-10 shadow-md" 
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                    />
-                  )}
-                  <Icon size={16} className={`sm:w-[18px] sm:h-[18px] ${isActive ? 'opacity-100' : 'opacity-70'}`} />
-                  <span className="pt-1 whitespace-nowrap">{tab.label}</span>
-                </button>
-              );
-            })}
-          </div>
-
           <div className="flex-1 overflow-y-auto hide-scrollbar bg-[var(--text-color)]/5 border border-[var(--border-color)] rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-10" style={{ maxHeight: 'calc(100vh - 150px)' }}>
-            <AnimatePresence mode="wait">
-              {activeTab === 'summary' && (
-                <motion.div 
-                  key="summary"
-                  initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
-                >
-                  {book.summary ? (
-                    <p className="text-lg sm:text-xl md:text-2xl leading-relaxed sm:leading-loose opacity-80 text-justify font-nastaliq">
-                      {book.summary}
-                    </p>
-                  ) : (
-                    <p className="text-lg sm:text-xl opacity-60 font-nastaliq">خلاصہ دستیاب نہیں ہے۔</p>
-                  )}
-                </motion.div>
-              )}
-
-              {activeTab === 'author' && (
-                <motion.div 
-                  key="author"
-                  initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
-                >
-                  {book.authorBio ? (
-                    <p className="text-lg sm:text-xl md:text-2xl leading-relaxed sm:leading-loose opacity-80 text-justify font-nastaliq">
-                      {book.authorBio}
-                    </p>
-                  ) : (
-                    <p className="text-lg sm:text-xl opacity-60 font-nastaliq">مصنف کے بارے میں معلومات دستیاب نہیں ہیں۔</p>
-                  )}
-                </motion.div>
-              )}
-
-              {activeTab === 'highlights' && (
-                <motion.div 
-                  key="highlights"
-                  initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
-                  className="space-y-4"
-                >
-                  {recentHighlights.length === 0 ? (
-                    <p className="text-lg sm:text-xl opacity-60 font-nastaliq py-4">کوئی ہائی لائٹ موجود نہیں ہے۔</p>
-                  ) : (
-                    <>
-                      <div className="grid grid-cols-1 gap-3 sm:gap-4">
-                        {recentHighlights.map(h => {
-                          const chapter = book.chapters.find(c => c.id === h.chapterId);
-                          return (
-                            <div key={h.id} className="p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-[var(--bg-color)] border border-[var(--border-color)] hover:bg-[var(--text-color)]/5 transition-colors shadow-sm">
-                              <p 
-                                className="text-base sm:text-lg leading-relaxed opacity-90 mb-3 font-nastaliq" 
-                                style={{ borderRight: `4px solid ${h.color}`, paddingRight: '12px' }}
-                              >
-                                {h.text}
-                              </p>
-                              {h.note && (
-                                <p className="text-sm opacity-70 mb-4 bg-[var(--accent-color)]/5 p-3 rounded-lg border-r-2 border-[var(--accent-color)] font-nastaliq leading-relaxed">
-                                  {h.note}
-                                </p>
-                              )}
-                              <div className="flex justify-between items-center text-xs sm:text-sm opacity-50 font-bold">
-                                <span className="font-nastaliq text-sm sm:text-base">{chapter?.titleUrdu || chapter?.title}</span>
-                                <span>{new Date(h.timestamp).toLocaleDateString('ur-PK')}</span>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <button 
-                        onClick={onShowHighlights}
-                        className="w-full px-6 sm:px-8 py-3 sm:py-4 mt-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-color)] font-nastaliq text-lg sm:text-xl font-bold hover:bg-[var(--text-color)]/5 transition-colors flex items-center justify-center gap-2 sm:gap-3 shadow-sm"
-                      >
-                        <Bookmark size={18} className="sm:w-5 sm:h-5" />
-                        <span className="pt-1">ہائی لائٹس گیلری کھولیں</span>
-                      </button>
-                    </>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <h3 className="text-2xl font-nastaliq font-bold mb-6 opacity-80">کتاب کا خلاصہ</h3>
+            <p className="text-lg sm:text-xl md:text-2xl leading-relaxed sm:leading-loose opacity-80 text-justify font-nastaliq">
+              {book.summary}
+            </p>
+            
+            <div className="mt-12">
+               <h3 className="text-2xl font-nastaliq font-bold mb-6 opacity-80">مصنف کے بارے میں</h3>
+               <p className="text-lg sm:text-xl md:text-2xl leading-relaxed sm:leading-loose opacity-80 text-justify font-nastaliq">
+                 {book.authorBio}
+               </p>
+            </div>
           </div>
         </div>
       </div>

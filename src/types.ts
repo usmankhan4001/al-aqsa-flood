@@ -23,6 +23,9 @@ export interface TypographySettings {
   lineHeight: number;
   paragraphSpacing: number;
   fontFamily: 'sans' | 'serif' | 'nastaliq' | 'arabic';
+  alignment: 'right' | 'left' | 'center' | 'justify';
+  indent: number;
+  lineSpacing: number; // 1-4 scale
 }
 
 export interface Highlight {
@@ -43,4 +46,7 @@ export interface AppState {
   brightness: number;
   typography: TypographySettings;
   highlights: Highlight[];
+  scrolling: boolean; // toggle for scrolling vs paging
+  audioEnabled: boolean;
+  activeView: 'library' | 'reader' | 'highlights' | 'notes' | 'studio';
 }

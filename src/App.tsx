@@ -8,14 +8,15 @@ import { useAppState } from './hooks/useAppState';
 import { LibraryView } from './components/LibraryView';
 import { ReaderView } from './components/ReaderView';
 import { HighlightsGallery } from './components/HighlightsGallery';
+import { NotesGallery } from './components/NotesGallery';
+import { QuoteStudio } from './components/QuoteStudio';
+import { MainNavbar } from './components/MainNavbar';
 import bookData from './data/content.json';
 import { Book } from './types';
 import { AnimatePresence, motion } from 'motion/react';
 
 export default function App() {
   const { state, updateState } = useAppState();
-  const [view, setView] = useState<'library' | 'reader'>('library');
-  const [showHighlights, setShowHighlights] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
@@ -57,17 +58,15 @@ export default function App() {
     if (!state.currentChapterId && book.chapters.length > 0) {
       updateState({ currentChapterId: book.chapters[0].id });
     }
-    setView('reader');
+    updateState({ activeView: 'reader' });
   };
 
   const handleGoBack = () => {
-    setView('library');
+    updateState({ activeView: 'library' });
   };
 
   const handleJumpToChapter = (chapterId: string | number) => {
-    updateState({ currentChapterId: chapterId });
-    setShowHighlights(false);
-    setView('reader');
+    updateState({ currentChapterId: chapterId, activeView: 'reader' });
   };
 
   return (
@@ -95,37 +94,60 @@ export default function App() {
       />
 
       <AnimatePresence mode="wait">
-        {view === 'library' ? (
+        {state.activeView === 'library' && (
           <LibraryView 
             key="library"
             book={book} 
             state={state} 
+            updateState={updateState}
             onContinue={handleContinueReading} 
-            onShowHighlights={() => setShowHighlights(true)} 
           />
-        ) : (
+        )}
+        
+        {state.activeView === 'reader' && (
           <ReaderView 
             key="reader"
             book={book} 
             state={state} 
             updateState={updateState} 
             onBack={handleGoBack} 
-            onShowHighlights={() => setShowHighlights(true)}
+            onShowHighlights={() => updateState({ activeView: 'highlights' })}
+          />
+        )}
+
+        {state.activeView === 'highlights' && (
+           <div key="highlights-wrap" className="flex flex-col min-h-screen">
+             <HighlightsGallery 
+                book={book} 
+                state={state} 
+                updateState={updateState} 
+                onClose={() => updateState({ activeView: 'library' })} 
+                onJump={handleJumpToChapter} 
+              />
+           </div>
+        )}
+
+        {state.activeView === 'notes' && (
+          <NotesGallery 
+            book={book}
+            state={state}
+            updateState={updateState}
+            onJump={handleJumpToChapter}
+          />
+        )}
+
+        {state.activeView === 'studio' && (
+          <QuoteStudio 
+            book={book}
+            state={state}
           />
         )}
       </AnimatePresence>
 
-      <AnimatePresence>
-        {showHighlights && (
-          <HighlightsGallery 
-            book={book} 
-            state={state} 
-            updateState={updateState} 
-            onClose={() => setShowHighlights(false)} 
-            onJump={handleJumpToChapter} 
-          />
-        )}
-      </AnimatePresence>
+      <MainNavbar 
+        activeView={state.activeView}
+        onViewChange={(v) => updateState({ activeView: v })}
+      />
 
       {/* PWA Install Prompt */}
       <AnimatePresence>
