@@ -82,10 +82,7 @@ export function HighlightsGallery({ book, state, updateState, onClose, onJump }:
 
                     <div className="flex justify-start">
                       <button 
-                        onClick={() => {
-                          onJump(highlight.chapterId);
-                          onClose();
-                        }}
+                        onClick={() => onJump(highlight.chapterId)}
                         className="text-xs font-bold flex items-center gap-2 hover:gap-3 transition-all font-nastaliq px-3 py-2 bg-[var(--accent-color)]/10 text-[var(--accent-color)] rounded-full"
                       >
                         باب پر جائیں <ArrowLeft size={14} className="rtl:-scale-x-100" />

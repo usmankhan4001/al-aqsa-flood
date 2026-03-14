@@ -49,4 +49,5 @@ export interface AppState {
   scrolling: boolean; // toggle for scrolling vs paging
   audioEnabled: boolean;
   activeView: 'library' | 'reader' | 'highlights' | 'notes' | 'studio';
+  returnToView?: 'library' | 'reader';
 }

@@ -66,7 +66,7 @@ export default function App() {
   };
 
   const handleJumpToChapter = (chapterId: string | number) => {
-    updateState({ currentChapterId: chapterId, activeView: 'reader' });
+    updateState({ currentChapterId: chapterId, activeView: 'reader', returnToView: undefined });
   };
 
   return (
@@ -111,7 +111,7 @@ export default function App() {
             state={state} 
             updateState={updateState} 
             onBack={handleGoBack} 
-            onShowHighlights={() => updateState({ activeView: 'highlights' })}
+            onShowHighlights={() => updateState({ activeView: 'highlights', returnToView: 'reader' })}
           />
         )}
 
@@ -121,7 +121,7 @@ export default function App() {
                 book={book} 
                 state={state} 
                 updateState={updateState} 
-                onClose={() => updateState({ activeView: 'library' })} 
+                onClose={() => updateState({ activeView: state.returnToView || 'library', returnToView: undefined })} 
                 onJump={handleJumpToChapter} 
               />
            </div>
