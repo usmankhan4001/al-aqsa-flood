@@ -32,6 +32,8 @@ export interface Highlight {
   color: string;
   note?: string;
   timestamp: number;
+  startOffset?: number;
+  endOffset?: number;
 }
 
 export interface AppState {

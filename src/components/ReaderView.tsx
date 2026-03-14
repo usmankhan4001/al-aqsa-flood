@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Mark from 'mark.js';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Book, AppState, Highlight } from '../types';
 import { ArrowLeft, Settings, Share2, ChevronLeft, ChevronRight, X, List, Bookmark, Type, StickyNote, Edit3 } from 'lucide-react';
 import { SettingsModal } from './SettingsModal';
 import { ShareModal } from './ShareModal';
 import { TOCModal } from './TOCModal';
+import { HighlightedContent } from './HighlightedContent';
 import { motion, AnimatePresence } from 'motion/react';
 
 export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: any, onBack: () => void, onShowHighlights: () => void }> = ({ book, state, updateState, onBack, onShowHighlights }) => {
@@ -75,42 +75,27 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
 
   const [selection, setSelection] = useState<{ text: string, rect: DOMRect } | null>(null);
 
-  useEffect(() => {
-    if (contentRef.current) {
-      const markHighlights = () => {
-        if (!contentRef.current) return;
-        const instance = new Mark(contentRef.current);
-        instance.unmark();
-        
-        const chapterHighlights = state.highlights.filter(h => h.chapterId === chapter.id);
-        
-        chapterHighlights.forEach(h => {
-          if (!h.text || h.text.trim().length === 0) return;
-          instance.mark(h.text, {
-            className: 'custom-highlight',
-            diacritics: true,
-            separateWordSearch: false,
-            acrossElements: true,
-            each: (element) => {
-              const el = element as HTMLElement;
-              el.style.backgroundColor = h.color;
-              el.style.color = 'inherit';
-              el.style.borderRadius = '4px';
-              el.style.padding = '2px 0';
-              el.style.boxShadow = `0 0 0 2px ${h.color}`; // Make it more visible
-            }
-          });
-        });
-      };
+  // Calculate absolute character offset within the content container
+  const getOffsets = () => {
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0 || !contentRef.current) return null;
+    const range = sel.getRangeAt(0);
+    
+    // Ensure selection is within content
+    if (!contentRef.current.contains(range.commonAncestorContainer)) return null;
 
-      // Delay execution to ensure React has finished updating the DOM
-      const timer = setTimeout(markHighlights, 50);
-      return () => clearTimeout(timer);
-    }
-  }, [chapter.id, state.highlights, chapter.content]);
+    const preRange = range.cloneRange();
+    preRange.selectNodeContents(contentRef.current);
+    preRange.setEnd(range.startContainer, range.startOffset);
+    const start = preRange.toString().length;
+    
+    return {
+      start,
+      end: start + range.toString().length
+    };
+  };
 
   useEffect(() => {
-    let timeout: number;
     let stabilityTimeout: number;
 
     const handleSelectionChange = () => {
@@ -118,27 +103,21 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
       stabilityTimeout = window.setTimeout(() => {
         const sel = window.getSelection();
         if (sel && sel.toString().trim().length > 0 && sel.rangeCount > 0) {
-          const range = sel.getRangeAt(0);
-          
-          // Check if selection is within content
-          if (contentRef.current?.contains(range.commonAncestorContainer)) {
+          const offsets = getOffsets();
+          if (offsets) {
+            const range = sel.getRangeAt(0);
             const rect = range.getBoundingClientRect();
-            // Only update if rect is valid
             if (rect.width > 0 && rect.height > 0) {
-               setSelection({ text: sel.toString(), rect });
+              setSelection({ text: sel.toString(), rect, ...offsets });
             }
           }
         }
-        // Don't auto-clear here, let handleInputStart handle it
-      }, 300); // Wait for selection to be stable
+      }, 300);
     };
 
     const handleInputStart = (e: MouseEvent | TouchEvent) => {
       const target = e.target as HTMLElement;
-      const isToolbarAction = target.closest('.selection-toolbar');
-      const isContent = contentRef.current?.contains(target);
-      
-      if (!isToolbarAction && !isContent) {
+      if (!target.closest('.selection-toolbar') && !contentRef.current?.contains(target)) {
         setSelection(null);
       }
     };
@@ -156,13 +135,16 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
   }, []);
 
   const handleHighlight = (color: string) => {
-    if (selection) {
+    if (selection && (selection as any).start !== undefined) {
+      const selWithOffsets = selection as typeof selection & { start: number, end: number };
       const newHighlight: Highlight = {
         id: Date.now().toString(),
         chapterId: chapter.id,
-        text: selection.text,
+        text: selWithOffsets.text,
         color,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        startOffset: selWithOffsets.start,
+        endOffset: selWithOffsets.end
       };
       updateState({ highlights: [...state.highlights, newHighlight] });
       window.getSelection()?.removeAllRanges();
@@ -171,15 +153,18 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
   };
 
   const handleAddNote = () => {
-    if (selection) {
+    if (selection && (selection as any).start !== undefined) {
+      const selWithOffsets = selection as typeof selection & { start: number, end: number };
       const id = Date.now().toString();
       const newHighlight: Highlight = {
         id,
         chapterId: chapter.id,
-        text: selection.text,
-        color: '#fef08a', // Default yellow
+        text: selWithOffsets.text,
+        color: '#fef08a',
         timestamp: Date.now(),
-        note: ""
+        note: "",
+        startOffset: selWithOffsets.start,
+        endOffset: selWithOffsets.end
       };
       updateState({ highlights: [...state.highlights, newHighlight] });
       setEditingNoteId(id);
@@ -225,11 +210,10 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
           lineHeight: typography.lineHeight,
         }}
       >
-        <div 
-          ref={contentRef}
-          className="reader-content block"
-          style={{ '--p-spacing': `${typography.paragraphSpacing}px` } as React.CSSProperties}
-          dangerouslySetInnerHTML={{ __html: cleanContent(chapter.content) }}
+        <HighlightedContent 
+          content={chapter.content} 
+          highlights={state.highlights.filter(h => h.chapterId === chapter.id)}
+          contentRef={contentRef}
         />
       </main>
 

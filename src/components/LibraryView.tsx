@@ -165,12 +165,12 @@ export const LibraryView: React.FC<{ book: Book, state: AppState, onContinue: ()
                             <div key={h.id} className="p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-[var(--bg-color)] border border-[var(--border-color)] hover:bg-[var(--text-color)]/5 transition-colors shadow-sm">
                               <p 
                                 className="text-base sm:text-lg leading-relaxed opacity-90 mb-3 font-nastaliq" 
-                                style={{ borderRight: `3px solid ${h.color}`, paddingRight: '12px' }}
+                                style={{ borderRight: `4px solid ${h.color}`, paddingRight: '12px' }}
                               >
                                 {h.text}
                               </p>
                               {h.note && (
-                                <p className="text-sm opacity-70 mb-4 bg-[var(--accent-color)]/5 p-2 rounded-lg border-r-2 border-[var(--accent-color)] font-nastaliq">
+                                <p className="text-sm opacity-70 mb-4 bg-[var(--accent-color)]/5 p-3 rounded-lg border-r-2 border-[var(--accent-color)] font-nastaliq leading-relaxed">
                                   {h.note}
                                 </p>
                               )}

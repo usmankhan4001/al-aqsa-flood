@@ -58,7 +58,7 @@ export function HighlightsGallery({ book, state, updateState, onClose, onJump }:
                   </div>
                   <p 
                     className="text-xl mb-4 pr-6 border-r-4 leading-relaxed font-nastaliq"
-                    style={{ borderColor: highlight.color }}
+                    style={{ borderColor: highlight.color, borderWidth: '0 4px 0 0' }}
                   >
                     {highlight.text}
                   </p>
