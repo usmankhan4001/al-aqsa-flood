@@ -8,13 +8,13 @@ The application provides an immersive reading experience for the documentary boo
 
 ## ✨ Features
 
-- **📖 Premium Reading Experience**: Optimized for Urdu typography using Jameel Noori Nastaliq fonts for a traditional and elegant look.
-- **🎨 Dynamic Themes**: Choose from Light, Dark, Sepia, Midnight, Oasis, and Paper themes to suit your reading environment.
-- **✨ Highlighting & Notes**: Select any text to highlight it with various colors and add personal notes to important passages.
-- **🖼️ Quote Sharing**: Generate and share beautiful images of your favorite quotes with a custom-designed background.
-- **📱 PWA Ready**: Install the app on your mobile home screen or desktop for a native-like experience with offline support.
-- **📚 Interactive TOC**: Quickly navigate through chapters using the integrated Table of Contents.
-- **🌓 Adaptive Brightness**: Built-in software brightness control for comfortable reading in all lighting conditions.
+- **📖 V6 Unified UI**: A professionally built, "unilateral" design system featuring **Sticky Bottom Navigation** and **Attached Drawers** for a cohesive, "attached" feel.
+- **🎨 Dynamic Themes**: Curated reading environments including Midnight, Dark, Sepia, Oasis, and Paper themes with minimal blur/glass effects for a premium look.
+- **🎨 Quote Studio V6**: A redesigned two-part designer with a real-time preview and an integrated highlights list for effortless selection and deletion.
+- **✨ Highlighting & Notes**: Advanced text selection with multi-color highlighting and personalized notes, now with a prominent and centralized deletion system.
+- **📱 PWA Ready**: Fully installable with offline support and a redesigned V6 install prompt.
+- **📚 Interactive TOC & Navigation**: Optimized Table of Contents and corrected RTL navigation logic (Urdu-first) for a seamless reading journey.
+- **🌓 Adaptive Brightness**: Integrated software brightness control for comfortable reading in any environment.
 
 ## 🛠️ Technology Stack
 
