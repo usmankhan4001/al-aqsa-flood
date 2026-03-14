@@ -111,37 +111,45 @@ export const ReaderView: React.FC<{ book: Book, state: AppState, updateState: an
 
   useEffect(() => {
     let timeout: number;
-    const handleSelectionEnd = (e: MouseEvent | TouchEvent) => {
-      clearTimeout(timeout);
-      timeout = window.setTimeout(() => {
+    let stabilityTimeout: number;
+
+    const handleSelectionChange = () => {
+      clearTimeout(stabilityTimeout);
+      stabilityTimeout = window.setTimeout(() => {
         const sel = window.getSelection();
         if (sel && sel.toString().trim().length > 0 && sel.rangeCount > 0) {
           const range = sel.getRangeAt(0);
           
+          // Check if selection is within content
           if (contentRef.current?.contains(range.commonAncestorContainer)) {
             const rect = range.getBoundingClientRect();
-            setSelection({ text: sel.toString(), rect });
+            // Only update if rect is valid
+            if (rect.width > 0 && rect.height > 0) {
+               setSelection({ text: sel.toString(), rect });
+            }
           }
         }
-      }, 100);
+        // Don't auto-clear here, let handleInputStart handle it
+      }, 300); // Wait for selection to be stable
     };
 
     const handleInputStart = (e: MouseEvent | TouchEvent) => {
-      const isToolbarAction = (e.target as HTMLElement).closest('.selection-toolbar');
-      if (!isToolbarAction) {
+      const target = e.target as HTMLElement;
+      const isToolbarAction = target.closest('.selection-toolbar');
+      const isContent = contentRef.current?.contains(target);
+      
+      if (!isToolbarAction && !isContent) {
         setSelection(null);
       }
     };
 
-    document.addEventListener('mouseup', handleSelectionEnd);
-    document.addEventListener('touchend', handleSelectionEnd);
+    document.addEventListener('selectionchange', handleSelectionChange);
     document.addEventListener('mousedown', handleInputStart);
     document.addEventListener('touchstart', handleInputStart);
     
     return () => {
-      clearTimeout(timeout);
-      document.removeEventListener('mouseup', handleSelectionEnd);
-      document.removeEventListener('touchend', handleSelectionEnd);
+      clearTimeout(stabilityTimeout);
+      document.removeEventListener('selectionchange', handleSelectionChange);
       document.removeEventListener('mousedown', handleInputStart);
       document.removeEventListener('touchstart', handleInputStart);
     };

@@ -3,7 +3,9 @@
   "short_name": "طوفان کے پرچم",
   "description": "محمد زکی حمد کی کتاب کا ڈیجیٹل ریڈر",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#3b82f6",
   "icons": [
@@ -17,7 +19,7 @@
       "src": "/icon.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "maskable any"
     }
   ]
 }

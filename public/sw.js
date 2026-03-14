@@ -1,4 +1,4 @@
-const CACHE_NAME = 'urdu-reader-v2';
+const CACHE_NAME = 'urdu-reader-v3';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -11,21 +11,32 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      // Use cache.addAll but catch individual errors if possible
-      // For now, keep it simple
-      return cache.addAll(ASSETS_TO_CACHE);
+      // Use individual add for each asset to avoid failing the whole install if one fails
+      return Promise.allSettled(
+        ASSETS_TO_CACHE.map(asset => cache.add(asset))
+      );
     })
   );
 });
 
 self.addEventListener('activate', (event) => {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    }).then(() => self.clients.claim())
+  );
 });
 
 self.addEventListener('fetch', (event) => {
+  // Simple network-first falling back to cache
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
+    fetch(event.request)
+      .catch(() => caches.match(event.request))
   );
 });
